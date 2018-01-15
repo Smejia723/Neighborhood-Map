@@ -31,3 +31,5 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-anim
 https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 
 https://www.codexworld.com/google-maps-with-multiple-markers-using-javascript-api/
+
+http://knockoutjs.com/
