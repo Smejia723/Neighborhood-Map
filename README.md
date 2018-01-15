@@ -2,7 +2,7 @@
 A single page application featuring a map of a neighborhood I would like to visit. 
 
 # About
-Neighborhood Map is single web page project which involves framework and various of API's. Aside from the Google Maps API, additional information is added with the use of _______. ________ is the frame work that alllows the project to be organized with the MVVM (modelViewViewmodel) pattern.
+Neighborhood Map is single web page project which involves framework and various of API's. Aside from the Google Maps API, additional information is added with the use of "blank". __Knockout.js__ is the framework that alllows the project to be organized with the MVVM (modelViewViewmodel) pattern.
 
 # Tools, Frameworks, and APIs
 
