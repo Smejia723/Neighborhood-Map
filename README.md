@@ -24,12 +24,12 @@ Neighborhood Map is single web page project which involves framework and various
 
 # Reference
 
-https://developers.google.com/maps/documentation/javascript/infowindows
+*https://developers.google.com/maps/documentation/javascript/infowindows
+*https://discussions.udacity.com/t/viewmodel-and-callback-help/39525
+*https://developers.google.com/maps/documentation/javascript/examples/marker-animations
 
-https://developers.google.com/maps/documentation/javascript/examples/marker-animations
+*https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 
-https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+*https://www.codexworld.com/google-maps-with-multiple-markers-using-javascript-api/
 
-https://www.codexworld.com/google-maps-with-multiple-markers-using-javascript-api/
-
-http://knockoutjs.com/
+*http://knockoutjs.com/
