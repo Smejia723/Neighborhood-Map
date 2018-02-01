@@ -29,7 +29,7 @@ Neighborhood Map is single web page project which involves framework and various
 
 *https://discussions.udacity.com/t/viewmodel-and-callback-help/39525
 
-*https://discussions.udacity.com/t/neighborhood-map-project-5-get-data-foursquare-api/30408/36
+*https://discussions.udacity.com/t/cant-get-foursquare-api-to-work/259270
 
 *https://developers.google.com/maps/documentation/javascript/examples/marker-animations
 
