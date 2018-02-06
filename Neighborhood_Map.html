@@ -23,13 +23,10 @@
                     <input id="show-locations" type="button" value="Show Locations">
                     <input id="hide-locations" type="button" value="Hide Locations">
                 </div>
-                <div data-bind="with:initMap">
-                    <h2 data-bind="text: title"></h2>
-                    <h3 data-bind="text: wiki"></h3>
-                    <ul data-bind="foreach: placelist">
-                        <li data-bind="text: title"></li>
-                    </ul>
-                </div>
+                <ul data-bind="foreach: locationsList">
+                    <li data-bind="text: title, click: $root.setMarker"></li>
+                    <input data-bind="text: wiki" type="button" value="Wiki-link">
+                </ul>
             </div>
             <div id="map" data-bind= "initMap"></div>
         </div>
