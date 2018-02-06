@@ -136,7 +136,14 @@ var ViewModel = function() {
             populateInfoWindow(this, LargeInfowindow);
         });
     }
+
+    this.setMarker = function(locations) {
+        google.maps.event.trigger(locations.location, 'click');
+    };
+
+
     map.fitBounds(bounds);
+
 
     document.getElementById('show-locations').addEventListener('click', showLocations);
     document.getElementById('hide-locations').addEventListener('click', hideLocations);
@@ -162,7 +169,7 @@ var ViewModel = function() {
                     type: "Get",
                     dataType: 'json',
                     cache: false,
-                    url: 'https://api.foursquare.com/v2/venues/' + marker.VenueId + '/photos?' +
+                    url: 'https://api.foursquare.com/v2/venues/' + marker.VenueId + '/photos' +
                     CLIENT_ID_Foursquare + CLIENT_SECRET_Foursquare,
                     success: function(data) {
                         var photo_data = response.response.photo.items[0] || "";
