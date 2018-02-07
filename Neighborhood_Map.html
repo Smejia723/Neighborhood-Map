@@ -3,16 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="Neighborhood Map" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css">
-        <style type="text/css">
-            html, body { height: 100%; margin: 0; padding: 0; }
-            #map { bottom:0px; height: 100%; left: 362px;
-                position: absolute; right: 0px;}
-            .options-box{ background: #fff; border: 1px solid #999;
-            border-radius: 3px; height: 100%; line-height: 35px;
-            padding: 10px 10px 30px 10px; text-align: left;
-            width: 340px;}
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+
         <title>Samuel Mejia Udacity Map</title>
     </head>
     <body>
@@ -23,11 +15,11 @@
                     <input id="show-locations" type="button" value="Show Locations">
                     <input id="hide-locations" type="button" value="Hide Locations">
                 </div>
-                <ul data-bind="foreach: locationsList">
-                    <li data-bind="text: title, click: $root.setMarker"></li>
-                    <input data-bind="text: wiki" type="button" value="Wiki-link">
-                </ul>
             </div>
+            <ul data-bind="foreach: locationsList">
+                <li data-bind="text: title, click: $parent.setClick"></li>
+                <a data-bind="attr: {href: url}">Wikapedia link</a>
+            </ul>
             <div id="map" data-bind= "initMap"></div>
         </div>
 
