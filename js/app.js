@@ -7,6 +7,7 @@ var markers = [];
 var clientID;
 var clientSecret;
 
+// database of for all the listings
 var locations = [
     {
         title: 'Old Quebec',
@@ -91,16 +92,13 @@ var locations = [
 var ViewModel = function() {
     var self = this;
 
-    var $wikiElem = $('#wikipedia-links');
-    $wikiElem.text("");
-
     this.locationsList = ko.observableArray(locations);
 
     this.title = ko.observableArray('');
     this.location = ko.observableArray('');
     this.content = ko.observableArray('');
     this.VenueId = ko.observableArray('');
-    url: ko.observableArray(locations.wiki);
+    this.url = ko.observableArray(locations.wiki);
 
     var LargeInfowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
@@ -133,9 +131,9 @@ var ViewModel = function() {
         });
     }
 
-    self.setClick = function (location){
-        google.maps.event.trigger(location.marker,'click')
-    };
+    self.setClick = function(location){
+        google.maps.event.trigger(location.marker, 'click')
+    }
 
     map.fitBounds(bounds);
 
@@ -158,7 +156,7 @@ var ViewModel = function() {
             var CLIENT_SECRET_Foursquare = '&client_secret=YA255BIRGIDJPQ5R31KGMUZ34XCRVYW2FBIR1D3S1TRJ4ILZ'
 
             // Make AJAX request to Foursquare
-            function foursquarephoto(){
+            function foursquarePicture(){
                 $.ajax({
                     type: "Get",
                     dataType: 'jsonp',
@@ -175,7 +173,8 @@ var ViewModel = function() {
                         var pictureURL =  photo_data.prefix + '300x300' +  photo_data.suffix;
                         var picture =('<img class="bgimg" src="' + pictureURL +' "> ');
                         infowindow.setContent(
-                            '<div>' + marker.content + '</div>' + '<div>' + picture + '</div>'
+                            '<div>' + marker.content + '</div>' + '<div>' + picture + '</div>' +
+                            '<img src="images/Powered-by-Foursquare-one-color-300.png" alt="">'
                             );
                         infowindow.open(map, marker);
                         if(!response.rating){
@@ -188,7 +187,7 @@ var ViewModel = function() {
             var foursquareRequestTimeout = setTimeout(function() {
             alert("Failed to load Foursquare photos");
             }, 3000);
-            foursquarephoto();
+            foursquarePicture();
             clearTimeout(foursquareRequestTimeout);
             // Make sure the marker property is cleard if the infowindow is closed.
             infowindow.addListener('closeclick', function(){
