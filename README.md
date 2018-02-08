@@ -22,7 +22,6 @@ Neighborhood Map is single web page project which involves framework and various
 * open Browser
 * write `http://localhost:8000`and check the website out
 
-* or see live at: 
 
 # Reference
 *https://developers.google.com/maps/documentation/javascript/tutorial
