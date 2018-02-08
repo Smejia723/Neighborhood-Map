@@ -1,5 +1,5 @@
 # Neighborhood-Map
-A single page application featuring a map of a neighborhood I would like to visit. 
+A single page application featuring a map of a neighborhood I would like to visit. On the webpage will be six markers of landmarks with a small description from the wiki entry, an image of the location and a logo showing the image came from Foursquare. on the bar to the side will have links to the wiki entres for all six and a button to clear and unclear the markers on the Map.
 
 # About
 Neighborhood Map is single web page project which involves framework and various of API's. Aside from the Google Maps API, additional information is added with the use of "blank". __Knockout.js__ is the framework that alllows the project to be organized with the MVVM (modelViewViewmodel) pattern.
@@ -10,6 +10,8 @@ Neighborhood Map is single web page project which involves framework and various
 * HTML
 * CSS
 * Google Maps API
+* Foursquare API
+* Wikipedia 
 
 # Getting Started 
 
