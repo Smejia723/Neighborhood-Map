@@ -17,7 +17,7 @@
                 </div>
             </div>
             <ul data-bind="foreach: locationsList">
-                <li data-bind="text: title, click: $parent.setClick"></li>
+                <li data-bind="text: title, click: $root.setClick"></li>
                 <a data-bind="attr: {href: url}">Wikapedia link</a>
             </ul>
             <div id="map" data-bind= "initMap"></div>
