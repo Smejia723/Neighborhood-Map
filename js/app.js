@@ -132,8 +132,8 @@ var ViewModel = function() {
     }
 
     self.setClick = function(location){
-        google.maps.event.trigger(location.marker, 'click')
-    }
+        google.maps.event.trigger(location.marker, 'click');
+    };
 
     map.fitBounds(bounds);
 
@@ -151,12 +151,11 @@ var ViewModel = function() {
             marker.setAnimation(google.maps.Animation.BOUNCE);
 
             // FourSquare api
-            var CLIENT_ID_Foursquare ='?client_id=AZZZH2MEFC5BGFHTCSY2UFTNEHMCMRNBDDAA2SFHE2NYDPJE'
+            var CLIENT_ID_Foursquare ='?client_id=AZZZH2MEFC5BGFHTCSY2UFTNEHMCMRNBDDAA2SFHE2NYDPJE';
 
-            var CLIENT_SECRET_Foursquare = '&client_secret=YA255BIRGIDJPQ5R31KGMUZ34XCRVYW2FBIR1D3S1TRJ4ILZ'
+            var CLIENT_SECRET_Foursquare = '&client_secret=YA255BIRGIDJPQ5R31KGMUZ34XCRVYW2FBIR1D3S1TRJ4ILZ';
 
             // Make AJAX request to Foursquare
-            function foursquarePicture(){
                 $.ajax({
                     type: "Get",
                     dataType: 'jsonp',
@@ -182,12 +181,10 @@ var ViewModel = function() {
                         }
                     }
                 });
-            }
             // api request failed gives the user a responce.
             var foursquareRequestTimeout = setTimeout(function() {
             alert("Failed to load Foursquare photos");
             }, 3000);
-            foursquarePicture();
             clearTimeout(foursquareRequestTimeout);
             // Make sure the marker property is cleard if the infowindow is closed.
             infowindow.addListener('closeclick', function(){
@@ -213,7 +210,7 @@ var ViewModel = function() {
             markers[i].setMap(null);
         }
     }
-}
+};
 
 // This function calls on google map to open on your location designated.
 function initMap() {
