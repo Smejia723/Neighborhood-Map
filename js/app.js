@@ -119,16 +119,18 @@ var ViewModel = function() {
             animation: google.maps.Animation.DROP,
             id: i
         });
-        //identify Marker by location
+            //identify Marker by location
         location.marker = marker;
         // push the marker to our array of markers.
         markers.push(marker);
-        // Extend the Boundaries of the map for each Marker
+            // Extend the Boundaries of the map for each Marker
         bounds.extend(marker.position);
-        //create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function(){
-            populateInfoWindow(this, LargeInfowindow);
-        });
+            //create an onclick event to open an infowindow at each marker.
+        marker.addListener('click', clickMarker);
+    }
+
+    function clickMarker() {
+        populateInfoWindow(this, LargeInfowindow);
     }
 
     self.setClick = function(location){
@@ -156,31 +158,31 @@ var ViewModel = function() {
             var CLIENT_SECRET_Foursquare = '&client_secret=YA255BIRGIDJPQ5R31KGMUZ34XCRVYW2FBIR1D3S1TRJ4ILZ';
 
             // Make AJAX request to Foursquare
-                $.ajax({
-                    type: "Get",
-                    dataType: 'jsonp',
-                    jsonp: "callback",
-                    cache: false,
-                    // to make call to Foursquare includes link, venueid of location,
-                    // client id and secret and finally date of api update until date.
-                    url: 'https://api.foursquare.com/v2/venues/' + marker.VenueId + '/photos' +
-                    CLIENT_ID_Foursquare + CLIENT_SECRET_Foursquare + "&v=20182601",
-                    success: function(response) {
-                        console.log(response);
-                        console.log(response.response);
-                        var photo_data = response.response.photos.items[i] || "";
-                        var pictureURL =  photo_data.prefix + '300x300' +  photo_data.suffix;
-                        var picture =('<img class="bgimg" src="' + pictureURL +' "> ');
-                        infowindow.setContent(
-                            '<div>' + marker.content + '</div>' + '<div>' + picture + '</div>' +
-                            '<img src="images/Powered-by-Foursquare-one-color-300.png" alt="">'
-                            );
-                        infowindow.open(map, marker);
-                        if(!response.rating){
-                            response.rating = 'no ratings in foursqare';
-                        }
+            $.ajax({
+                type: "Get",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                cache: false,
+                // to make call to Foursquare includes link, venueid of location,
+                // client id and secret and finally date of api update until date.
+                url: 'https://api.foursquare.com/v2/venues/' + marker.VenueId + '/photos' +
+                CLIENT_ID_Foursquare + CLIENT_SECRET_Foursquare + "&v=20182601",
+                success: function(response) {
+                    console.log(response);
+                    console.log(response.response);
+                    var photo_data = response.response.photos.items[i] || "";
+                    var pictureURL =  photo_data.prefix + '300x300' +  photo_data.suffix;
+                    var picture =('<img class="bgimg" src="' + pictureURL +' "> ');
+                    infowindow.setContent(
+                        '<div>' + marker.content + '</div>' + '<div>' + picture + '</div>' +
+                        '<img src="images/Powered-by-Foursquare-one-color-300.png" alt="">'
+                        );
+                    infowindow.open(map, marker);
+                    if(!response.rating){
+                        response.rating = 'no ratings in foursqare';
                     }
-                });
+                }
+            });
             // api request failed gives the user a responce.
             var foursquareRequestTimeout = setTimeout(function() {
             alert("Failed to load Foursquare photos");
