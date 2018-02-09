@@ -131,7 +131,7 @@ var ViewModel = function() {
 
     function clickMarker() {
         populateInfoWindow(this, LargeInfowindow);
-    };
+    }
 
     self.setClick = function(location){
         google.maps.event.trigger(location.marker, 'click');
