@@ -20,7 +20,7 @@ Neighborhood Map is single web page project which involves framework and various
 * Open Command Prompt
 * write `cd Documents/Neighborhood_Map/Neighborhood_Map.html` then ` python -m SimpleHTTPServer`
 * open Browser
-* write `http://localhost:8000`and check the website out
+* write `http://localhost:8000/Neighborhood_Map.html`and check the website out
 
 
 # Reference
