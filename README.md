@@ -43,3 +43,5 @@ Neighborhood Map is single web page project which involves framework and various
 *http://knockoutjs.com/documentation/attr-binding.html
 
 *https://discussions.udacity.com/t/please-help-issue-with-project-review/302124
+
+*http://knockoutjs.com/documentation/click-binding.html
