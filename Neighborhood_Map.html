@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="Neighborhood Map" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
 
         <title>Samuel Mejia Udacity Map</title>
@@ -12,12 +12,12 @@
             <div class="options-box">
                 <h1>Locations to visit in Quebec City</h1>
                 <div>
-                    <input id="show-locations" type="button" value="Show Locations">
-                    <input id="hide-locations" type="button" value="Hide Locations">
+                    <button data-bind="click: showLocations">Show Locations</button>
+                    <button data-bind="click: hideLocations">Hide Locations</button>
                 </div>
             </div>
             <ul data-bind="foreach: locationsList">
-                <li data-bind="text: title, click: $root.setClick"></li>
+                <li data-bind="text: title, click: $parent.setClick"></li>
                 <a data-bind="attr: {href: url}">Wikapedia link</a>
             </ul>
             <div id="map" data-bind= "initMap"></div>
@@ -26,8 +26,8 @@
 
         <script src="js/app.js"></script>
         <script src="js/lib/knockout-3.2.0.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-        <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCeVMyzrJigttn_68TmDLwczzlBCLSDtB8&v=3&callback=initMap" onerror="googleMapsError()">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+        <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCeVMyzrJigttn_68TmDLwczzlBCLSDtB8&v=3&callback=initMap">
         </script>
 
     </body>
