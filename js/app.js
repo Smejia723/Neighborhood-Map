@@ -93,7 +93,7 @@ var ViewModel = function() {
     var self = this;
 
     this.locationsList = ko.observableArray(locations);
-
+    this.GoogleMapsError = ko.observable(false);
     this.title = ko.observableArray('');
     this.location = ko.observableArray('');
     this.content = ko.observableArray('');
@@ -118,7 +118,7 @@ var ViewModel = function() {
             VenueId: VenueId,
             animation: google.maps.Animation.DROP,
             id: i
-        });
+        },setTimeout);
             //identify Marker by location
         location.marker = marker;
         // push the marker to our array of markers.
@@ -136,11 +136,11 @@ var ViewModel = function() {
     self.setClick = function(location){
         google.maps.event.trigger(location.marker, 'click');
     };
-
-    map.fitBounds(bounds);
-
-    document.getElementById('show-locations').addEventListener('click', showLocations);
-    document.getElementById('hide-locations').addEventListener('click', hideLocations);
+    // tip from reviewer to make map always fit on screen
+    // as user resizes their brower window:
+    google.maps.event.addDomListener(window, 'resize', function() {
+        map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
+    });
 
     // This Function populates the infowindow when the marker is clicked. We'll only allow
     // one infowindow which will open at the marker that is clicked, and populate based
@@ -151,6 +151,10 @@ var ViewModel = function() {
             infowindow.marker = marker;
             // add bounce
             marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function() {
+                marker.setAnimation(null);
+            }, 3500);
+
 
             // FourSquare api
             var CLIENT_ID_Foursquare ='?client_id=AZZZH2MEFC5BGFHTCSY2UFTNEHMCMRNBDDAA2SFHE2NYDPJE';
@@ -181,13 +185,12 @@ var ViewModel = function() {
                     if(!response.rating){
                         response.rating = 'no ratings in foursqare';
                     }
+                },
+                // api request failed gives the user a responce.
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Failed to load Foursquare photos");
                 }
             });
-            // api request failed gives the user a responce.
-            var foursquareRequestTimeout = setTimeout(function() {
-            alert("Failed to load Foursquare photos");
-            }, 3000);
-            clearTimeout(foursquareRequestTimeout);
             // Make sure the marker property is cleard if the infowindow is closed.
             infowindow.addListener('closeclick', function(){
                 infowindow.marker = null;
@@ -197,7 +200,7 @@ var ViewModel = function() {
     }
 
     // This function will loop through the markers array and display them all.
-    function showLocations() {
+    self.showLocations = function() {
         var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker and display the marker
         for (var i = 0; i < markers.length; i++) {
@@ -207,7 +210,7 @@ var ViewModel = function() {
         map.fitBounds(bounds);
     }
     // This function will loop through the listings and hide them all.
-    function hideLocations() {
+    self.hideLocations = function() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
@@ -217,7 +220,7 @@ var ViewModel = function() {
 // This function calls on google map to open on your location designated.
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
+        zoom: 12,
         center: {lat: 46.8139, lng: -71.2080}
     });
     ko.applyBindings(new ViewModel());
