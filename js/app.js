@@ -208,13 +208,13 @@ var ViewModel = function() {
             bounds.extend(markers[i].position);
         }
         map.fitBounds(bounds);
-    }
+    };
     // This function will loop through the listings and hide them all.
     self.hideLocations = function() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
-    }
+    };
 };
 
 // This function calls on google map to open on your location designated.
