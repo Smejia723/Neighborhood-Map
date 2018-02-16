@@ -118,9 +118,9 @@ var ViewModel = function() {
             VenueId: VenueId,
             animation: google.maps.Animation.DROP,
             id: i
-        },setTimeout);
-            //identify Marker by location
-        location.marker = marker;
+        });
+        //identify Marker by location
+        this.locationsList()[i].marker = marker;
         // push the marker to our array of markers.
         markers.push(marker);
             // Extend the Boundaries of the map for each Marker
@@ -164,7 +164,6 @@ var ViewModel = function() {
             // Make AJAX request to Foursquare
             $.ajax({
                 type: "Get",
-                dataType: 'jsonp',
                 jsonp: "callback",
                 cache: false,
                 // to make call to Foursquare includes link, venueid of location,
