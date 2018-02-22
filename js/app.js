@@ -88,131 +88,155 @@ var locations = [
 ];
 
 
-var ViewModel = function() {
-    var self = this;
+var ViewModel = {
+    search: function(value){
+        var self = this;
+        this.searchOption = ko.observable('');
+        this.locationsList = ko.observableArray(locations);
+        this.GoogleMapsError = ko.observable(false);
+        this.title = ko.observableArray('');
+        this.location = ko.observableArray('');
+        this.content = ko.observableArray('');
+        this.VenueId = ko.observableArray('');
+        this.url = ko.observableArray(locations.wiki);
 
-    this.locationsList = ko.observableArray(locations);
-    this.GoogleMapsError = ko.observable(false);
-    this.title = ko.observableArray('');
-    this.location = ko.observableArray('');
-    this.content = ko.observableArray('');
-    this.VenueId = ko.observableArray('');
-    this.url = ko.observableArray(locations.wiki);
-
-    var LargeInfowindow = new google.maps.InfoWindow();
-    var bounds = new google.maps.LatLngBounds();
-    // the flowing group uses the location array to creat an array of markers on initialize.
-    for (var i = 0; i < locations.length; i++) {
-        // get the position from the location array.
-        position = locations[i].location;
-        title = locations[i].title;
-        content = locations[i].content;
-        VenueId = locations[i].VenueId;
-        // Create a marker per location, and put into markers array.
-        marker = new google.maps.Marker({
-            map: map,
-            position: position,
-            title: title,
-            content: content,
-            VenueId: VenueId,
-            animation: google.maps.Animation.DROP,
-            id: i
-        });
-        //identify Marker by location
-        this.locationsList()[i].marker = marker;
-        // push the marker to our array of markers.
-        markers.push(marker);
-            // Extend the Boundaries of the map for each Marker
-        bounds.extend(marker.position);
-            //create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', clickMarker);
-    }
-
-    function clickMarker() {
-        populateInfoWindow(this, LargeInfowindow);
-    }
-
-    self.setClick = function(location){
-        google.maps.event.trigger(location.marker, 'click');
-    };
-    // tip from reviewer to make map always fit on screen
-    // as user resizes their brower window:
-    google.maps.event.addDomListener(window, 'resize', function() {
-        map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
-    });
-
-    // This Function populates the infowindow when the marker is clicked. We'll only allow
-    // one infowindow which will open at the marker that is clicked, and populate based
-    // on that markers position.
-    function populateInfoWindow(marker, infowindow){
-        // Check to make sure the infowindow is not already opened on this marker
-        if (infowindow.marker != marker) {
-            infowindow.marker = marker;
-            // add bounce
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function() {
-                marker.setAnimation(null);
-            }, 3500);
-
-
-            // FourSquare api
-            var CLIENT_ID_Foursquare ='?client_id=AZZZH2MEFC5BGFHTCSY2UFTNEHMCMRNBDDAA2SFHE2NYDPJE';
-
-            var CLIENT_SECRET_Foursquare = '&client_secret=YA255BIRGIDJPQ5R31KGMUZ34XCRVYW2FBIR1D3S1TRJ4ILZ';
-
-            // Make AJAX request to Foursquare
-            $.ajax({
-                type: "Get",
-                jsonp: "callback",
-                cache: false,
-                // to make call to Foursquare includes link, venueid of location,
-                // client id and secret and finally date of api update until date.
-                url: 'https://api.foursquare.com/v2/venues/' + marker.VenueId + '/photos' +
-                CLIENT_ID_Foursquare + CLIENT_SECRET_Foursquare + "&v=20182601",
-                success: function(response) {
-                    console.log(response);
-                    console.log(response.response);
-                    var photo_data = response.response.photos.items[i] || "";
-                    var pictureURL =  photo_data.prefix + '300x300' +  photo_data.suffix;
-                    var picture =('<img class="bgimg" src="' + pictureURL +' "> ');
-                    infowindow.setContent(
-                        '<div>' + marker.content + '</div>' + '<div>' + picture + '</div>' +
-                        '<img src="images/Powered-by-Foursquare-one-color-300.png" alt="">'
-                        );
-                    infowindow.open(map, marker);
-                    if(!response.rating){
-                        response.rating = 'no ratings in foursqare';
-                    }
-                },
-                // api request failed gives the user a responce.
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Failed to load Foursquare photos");
-                }
-            });
-            // Make sure the marker property is cleard if the infowindow is closed.
-            infowindow.addListener('closeclick', function(){
-                infowindow.marker = null;
-                marker.setAnimation(null);
-            });
-        }
-    }
-
-    // This function will loop through the markers array and display them all.
-    self.showLocations = function() {
+        var LargeInfowindow = new google.maps.InfoWindow();
         var bounds = new google.maps.LatLngBounds();
-        // Extend the boundaries of the map for each marker and display the marker
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-            bounds.extend(markers[i].position);
+        // the flowing group uses the location array to creat an array of markers on initialize.
+        for (var i = 0; i < locations.length; i++) {
+            // get the position from the location array.
+            position = locations[i].location;
+            title = locations[i].title;
+            content = locations[i].content;
+            VenueId = locations[i].VenueId;
+            // Create a marker per location, and put into markers array.
+            marker = new google.maps.Marker({
+                map: map,
+                position: position,
+                title: title,
+                content: content,
+                VenueId: VenueId,
+                animation: google.maps.Animation.DROP,
+                id: i
+            });
+            //identify Marker by location
+            this.locationsList()[i].marker = marker;
+            // push the marker to our array of markers.
+            markers.push(marker);
+                // Extend the Boundaries of the map for each Marker
+            bounds.extend(marker.position);
+                //create an onclick event to open an infowindow at each marker.
+            marker.addListener('click', clickMarker);
         }
-        map.fitBounds(bounds);
-    };
-    // This function will loop through the listings and hide them all.
-    self.hideLocations = function() {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
+
+        function clickMarker() {
+            populateInfoWindow(this, LargeInfowindow);
         }
-    };
+
+        self.setClick = function(location){
+            google.maps.event.trigger(location.marker, 'click');
+        };
+        // tip from reviewer to make map always fit on screen
+        // as user resizes their brower window:
+        google.maps.event.addDomListener(window, 'resize', function() {
+            map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
+        });
+        // filters locations that are shown on the map!
+        this.myLocationsFilter = ko.computed(function() {
+            var result = [];
+            for (var i = 0; i < markers.length; i++) {
+                var markerLocation = markers[i];
+                if (markerLocation.title.toLowerCase().includes(this.searchOption()
+                        .toLowerCase())) {
+                    result.push(markerLocation);
+                    markers[i].setVisible(true);
+                } else {
+                    markers[i].setVisible(false);
+                }
+            }
+            return result;
+        }, this);
+
+        // This Function populates the infowindow when the marker is clicked. We'll only allow
+        // one infowindow which will open at the marker that is clicked, and populate based
+        // on that markers position.
+        function populateInfoWindow(marker, infowindow){
+            // Check to make sure the infowindow is not already opened on this marker
+            if (infowindow.marker != marker) {
+                infowindow.marker = marker;
+                // add bounce
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function() {
+                    marker.setAnimation(null);
+                }, 1400);
+
+
+                // FourSquare api
+                var CLIENT_ID_Foursquare ='?client_id=AZZZH2MEFC5BGFHTCSY2UFTNEHMCMRNBDDAA2SFHE2NYDPJE';
+
+                var CLIENT_SECRET_Foursquare = '&client_secret=YA255BIRGIDJPQ5R31KGMUZ34XCRVYW2FBIR1D3S1TRJ4ILZ';
+
+                // Make AJAX request to Foursquare
+                $.ajax({
+                    type: "Get",
+                    jsonp: "callback",
+                    cache: false,
+                    // to make call to Foursquare includes link, venueid of location,
+                    // client id and secret and finally date of api update until date.
+                    url: 'https://api.foursquare.com/v2/venues/' + marker.VenueId + '/photos' +
+                    CLIENT_ID_Foursquare + CLIENT_SECRET_Foursquare + "&v=20182601",
+                    success: function(response) {
+                        console.log(response);
+                        console.log(response.response);
+                        var photo_data = response.response.photos.items[i] || "";
+                        var pictureURL =  photo_data.prefix + '300x300' +  photo_data.suffix;
+                        var picture =('<img class="bgimg" src="' + pictureURL +' "> ');
+                        infowindow.setContent(
+                            '<div>' + marker.content + '</div>' + '<div>' + picture + '</div>' +
+                            '<img src="images/Powered-by-Foursquare-one-color-300.png" alt="">'
+                            );
+                        infowindow.open(map, marker);
+                        if(!response.rating){
+                            response.rating = 'no ratings in foursqare';
+                        }
+                    },
+                    // api request failed gives the user a responce.
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Failed to load Foursquare photos");
+                    }
+                });
+                // Make sure the marker property is cleard if the infowindow is closed.
+                infowindow.addListener('closeclick', function(){
+                    infowindow.marker = null;
+                    marker.setAnimation(null);
+                });
+            }
+        }
+
+        // This function will loop through the markers array and display them all.
+        self.showLocations = function() {
+            var bounds = new google.maps.LatLngBounds();
+            // Extend the boundaries of the map for each marker and display the marker
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+                bounds.extend(markers[i].position);
+            }
+            map.fitBounds(bounds);
+        };
+        // This function will loop through the listings and hide them all.
+        self.hideLocations = function() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+        };
+    }
+};
+
+// if there is an Error this function will let the user know.
+googleError = function googleError() {
+    alert(
+        'hmm... Google Maps did not load. Please refresh the page and try again!'
+    );
 };
 
 // This function calls on google map to open on your location designated.
@@ -221,5 +245,5 @@ function initMap() {
         zoom: 12,
         center: {lat: 46.8139, lng: -71.2080}
     });
-    ko.applyBindings(new ViewModel());
+    ko.applyBindings(new ViewModel.search());
 }
