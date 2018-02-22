@@ -141,7 +141,7 @@ var ViewModel = {
         google.maps.event.addDomListener(window, 'resize', function() {
             map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
         });
-        // filters locations that are shown on the map!
+        // filters locations that are shown on the map.
         this.myLocationsFilter = ko.computed(function() {
             var result = [];
             for (var i = 0; i < markers.length; i++) {
