@@ -91,7 +91,7 @@ var locations = [
 var ViewModel = {
     search: function(value){
         var self = this;
-        this.searchOption = ko.observable('');
+        this.filter  = ko.observable('');
         this.locationsList = ko.observableArray(locations);
         this.GoogleMapsError = ko.observable(false);
         this.title = ko.observableArray('');
@@ -141,21 +141,25 @@ var ViewModel = {
         google.maps.event.addDomListener(window, 'resize', function() {
             map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
         });
-        // filters locations that are shown on the map.
+        // filters locations that are shown on the map!
         this.myLocationsFilter = ko.computed(function() {
-            var result = [];
-            for (var i = 0; i < markers.length; i++) {
-                var markerLocation = markers[i];
-                if (markerLocation.title.toLowerCase().includes(this.searchOption()
-                        .toLowerCase())) {
-                    result.push(markerLocation);
-                    markers[i].setVisible(true);
-                } else {
-                    markers[i].setVisible(false);
-                }
+            var filter  = self.filter().toLowerCase();
+            if (!filter ) {
+                ko.utils.arrayForEach(self.locationsList(), function(location) {
+                    location.marker.setVisible(true);
+                });
+                return self.locationsList();
+            } else {
+                return ko.utils.arrayFilter (self.locationsList(), function(location) {
+                    // set all markers visible (false)
+                    var result = (location.title.toLowerCase().search(filter) >= 0);
+                    location.marker.setVisible(result);
+                    return result;
+                });
             }
-            return result;
-        }, this);
+
+        });
+
 
         // This Function populates the infowindow when the marker is clicked. We'll only allow
         // one infowindow which will open at the marker that is clicked, and populate based
