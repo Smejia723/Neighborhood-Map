@@ -14,7 +14,7 @@
                 <button data-bind="click: showLocations">Show Locations</button>
                 <button data-bind="click: hideLocations">Hide Locations</button>
                 </br>
-                <input placeholder="Search Locations" type="search" data-bind="textInput: searchOption, valueUpdate: 'keyup'">
+                <input placeholder="Search" type="search" data-bind="value: filter, valueUpdate: 'keyup'">
             </ul>
             <ul class="list" data-bind="foreach: locationsList">
                 <button data-bind="text: title, click: $parent.setClick"></button>
