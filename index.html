@@ -16,7 +16,7 @@
                 </br>
                 <input placeholder="Search" type="search" data-bind="value: filter, valueUpdate: 'keyup'">
             </ul>
-            <ul class="list" data-bind="foreach: locationsList">
+            <ul class="list" data-bind="foreach: myLocationsFilter">
                 <button data-bind="text: title, click: $parent.setClick"></button>
                 </br>
                 <a data-bind="attr: {href: url}">Wikapedia link</a>
