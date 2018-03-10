@@ -12,6 +12,7 @@ Neighborhood Map is single web page project which involves framework and various
 * Google Maps API
 * Foursquare API
 * Wikipedia 
+* Knockout
 
 # Getting Started 
 
